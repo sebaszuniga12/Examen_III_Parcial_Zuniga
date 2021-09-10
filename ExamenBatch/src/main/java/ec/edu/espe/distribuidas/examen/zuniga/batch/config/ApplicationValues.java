@@ -23,13 +23,19 @@ public class ApplicationValues {
     
     private final String configFile;
     private final String dataPath;
+    private final String mongoHost;
+    private final String mongoDB;
     
     @Autowired
     public ApplicationValues(@Value("${registrocivil.config.file}") String configFile,
-            @Value("${registrocivil.config.dataPath}") String dataPath)
+            @Value("${registrocivil.config.dataPath}") String dataPath,
+            @Value("${registrocivil.mongo.host}") String mongoHost,
+             @Value("${registrocivil.mongo.db}") String mongoDB)
     {
         this.configFile = configFile;
         this.dataPath = dataPath;
+        this.mongoHost = mongoHost;
+        this.mongoDB = mongoDB;
         log.info("Propiedades cargadas: " + this.toString());
     }
 
@@ -45,4 +51,11 @@ public class ApplicationValues {
         return dataPath;
     }
     
+    public String getMongoHost() {
+        return mongoHost;
+    }
+
+    public String getMongoDB() {
+        return mongoDB;
+    }
 }
