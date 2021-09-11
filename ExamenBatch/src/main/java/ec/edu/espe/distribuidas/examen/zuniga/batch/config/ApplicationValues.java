@@ -21,19 +21,15 @@ import org.springframework.stereotype.Component;
 @ToString
 public class ApplicationValues {
     
-    private final String configFile;
-    private final String dataPath;
     private final String mongoHost;
     private final String mongoDB;
     
     @Autowired
-    public ApplicationValues(@Value("${registrocivil.config.file}") String configFile,
-            @Value("${registrocivil.config.dataPath}") String dataPath,
+    public ApplicationValues(
             @Value("${registrocivil.mongo.host}") String mongoHost,
              @Value("${registrocivil.mongo.db}") String mongoDB)
     {
-        this.configFile = configFile;
-        this.dataPath = dataPath;
+
         this.mongoHost = mongoHost;
         this.mongoDB = mongoDB;
         log.info("Propiedades cargadas: " + this.toString());
@@ -41,14 +37,6 @@ public class ApplicationValues {
 
     public static Logger getLog() {
         return log;
-    }
-
-    public String getConfigFile() {
-        return configFile;
-    }
-
-    public String getDataPath() {
-        return dataPath;
     }
     
     public String getMongoHost() {

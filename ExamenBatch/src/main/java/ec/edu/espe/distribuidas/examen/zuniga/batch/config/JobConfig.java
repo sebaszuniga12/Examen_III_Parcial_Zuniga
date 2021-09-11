@@ -5,8 +5,8 @@
  */
 package ec.edu.espe.distribuidas.examen.zuniga.batch.config;
 
-import ec.edu.espe.distribuidas.examen.zuniga.batch.tasks.GeneracionPersona;
-import ec.edu.espe.distribuidas.examen.zuniga.batch.tasks.LeerCondiciones;
+import ec.edu.espe.distribuidas.examen.zuniga.batch.tasks.GuardarConsolidado;
+import ec.edu.espe.distribuidas.examen.zuniga.batch.tasks.LeerInformacion;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -40,27 +40,27 @@ public class JobConfig {
     private ApplicationValues applicationValues;
     
     @Bean
-    protected Step leerCondiciones(){
+    protected Step leerInformacion(){
         return steps
-                .get("leerCondiciones")
-                .tasklet(new LeerCondiciones(this.applicationValues))
+                .get("leerInformacion")
+                .tasklet(new LeerInformacion(this.applicationValues,this.mongotemplate))
                 .build();
     }
     
     @Bean
-    protected Step generacionPersona(){
+    protected Step generacionConsolidado(){
         return steps
-                .get("generacionPersona")
-                .tasklet(new GeneracionPersona(this.applicationValues,this.mongotemplate))
+                .get("generacionConsolidado")
+                .tasklet(new GuardarConsolidado(this.applicationValues,this.mongotemplate))
                 .build();
     }
     
     @Bean
-    public Job generadorPersonas(){
+    public Job generadorConsolidado(){
         return jobs
-                .get("generadorPersonas")
-                .start(leerCondiciones())
-                .next(generacionPersona())
+                .get("leerInformacion")
+                .start(leerInformacion())
+                .next(generacionConsolidado())
                 .build();
     }
     

@@ -14,7 +14,7 @@ public class BatchApplication {
     JobLauncher jobLauncher;
 
     @Autowired
-    @Qualifier("generadorPersonas")
+    @Qualifier("generadorConsolidado")
     Job jobs;
 
     public static void main(String[] args) {
